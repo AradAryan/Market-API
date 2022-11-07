@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+
 namespace Market.Presentation
 {
     public class Program
@@ -13,6 +16,16 @@ namespace Market.Presentation
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<IdentityContext>();
+
+            //and this: add identity and create the db
+            builder.Services.AddIdentityCore<ApplicationUser>(options => { });
+            new IdentityBuilder(typeof(ApplicationUser), typeof(IdentityRole), builder.Services)
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddEntityFrameworkStores<IdentityContext>();
+
+            builder.Services.AddSingleton<ISystemClock, SystemClock>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +39,9 @@ namespace Market.Presentation
 
             app.UseAuthorization();
 
+            app.UseAuthentication();
 
+            //app.UseMvc();
             app.MapControllers();
 
             app.Run();
