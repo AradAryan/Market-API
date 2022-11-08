@@ -1,3 +1,4 @@
+using Market.Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
@@ -41,7 +42,6 @@ namespace Market.Presentation
 
             app.UseAuthentication();
 
-            //app.UseMvc();
             app.MapControllers();
 
             app.Run();
