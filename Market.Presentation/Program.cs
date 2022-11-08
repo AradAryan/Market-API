@@ -44,7 +44,7 @@ namespace Market.Presentation
             app.UseAuthentication();
 
             app.MapControllers();
-
+            
             app.Run();
         }
     }
