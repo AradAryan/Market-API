@@ -1,3 +1,4 @@
+using Market.Domain;
 using Market.Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
