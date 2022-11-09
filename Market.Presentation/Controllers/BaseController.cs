@@ -7,15 +7,13 @@ namespace Market.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController : ControllerBase
+    public class BaseController<T> : ControllerBase
     {
-        public ILogger Logger { get; set; }
-        public UserManager<ApplicationUser> UserManager { get; set; }
+        public ILogger<T> Logger { get; set; }
 
-        public BaseController(ILogger logger, UserManager<ApplicationUser> userManager)
+        public BaseController(ILogger<T> logger)
         {
             Logger = logger;
-            UserManager = userManager;
         }
 
     }

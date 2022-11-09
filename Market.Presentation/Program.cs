@@ -1,3 +1,4 @@
+using Market.Domain;
 using Market.Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -108,7 +109,7 @@ namespace Market.Presentation
             app.UseAuthentication();
 
             app.MapControllers();
-
+            
             app.Run();
 
         }
