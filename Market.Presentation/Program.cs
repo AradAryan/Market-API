@@ -1,3 +1,4 @@
+using Market.Application.Authentication;
 using Market.Domain;
 using Market.Domain.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -14,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
+builder.Services.AddScoped<IUserApplicationService, UserApplicationService>();
+builder.Services.AddScoped<IRoleApplicationService, RoleApplicationService>();
+builder.Services.AddSingleton<ITokenService, TokenService>();
 
 // For Entity Framework
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString")));
@@ -22,7 +26,6 @@ builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(c
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<IdentityContext>()
     .AddDefaultTokenProviders();
-
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
 {

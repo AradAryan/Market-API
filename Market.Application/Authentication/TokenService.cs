@@ -10,16 +10,32 @@ namespace Market.Application.Authentication
     public class TokenService : ITokenService
     {
         private double TokenTimeOut { get; }
-        public TokenService(double tokenTimeOutMinutes)
+        private IConfiguration Configuration { get; }
+        public TokenService(IConfiguration configuration)
         {
-            TokenTimeOut = tokenTimeOutMinutes;
+            Configuration = configuration;
+            TokenTimeOut = double.Parse(configuration.GetSection("JWT:TokenExpiryTime").Value);
+        }
+        public JwtSecurityToken GetToken(List<Claim> authClaims)
+        {
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: Configuration["JWT:ValidIssuer"],
+                audience: Configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddHours(3),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return token;
         }
 
         public string BuildToken(string key, string issuer, UserModel user)
         {
             var claims = new[] {
             new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Role, user.Role.Name),
+            //new Claim(ClaimTypes.Role, user.Role.Name),
             new Claim(ClaimTypes.NameIdentifier,
             Guid.NewGuid().ToString())
         };

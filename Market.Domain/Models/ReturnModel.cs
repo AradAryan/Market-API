@@ -11,6 +11,6 @@ namespace Market.Domain.Models
     {
         public bool Succeed { get; set; }
         public object? Data { get; set; }
-        public string? Error { get; set; }
+        public string? Message { get; set; }
     }
 }

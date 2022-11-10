@@ -11,7 +11,6 @@ namespace Market.Domain.Models
 {
     public class UserModel : IdentityUser
     {
-        public RoleModel? Role { get; set; }
 
     }
 

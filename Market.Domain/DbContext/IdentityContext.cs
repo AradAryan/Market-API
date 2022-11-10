@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Market.Domain
 {
 
-    public class IdentityContext : IdentityDbContext<UserModel>
+    public class IdentityContext : IdentityDbContext<IdentityUser>
     {
         public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
         {
