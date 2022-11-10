@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Market.Domain.Models
 {
-    public class ReturnModel<TResult,TError>
+    public class ResponseModel
     {
         public bool Succeed { get; set; }
-        public TResult Data { get; set; }
-        public TError Error { get; set; }
+        public object? Data { get; set; }
+        public string? Error { get; set; }
     }
 }

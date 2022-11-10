@@ -6,12 +6,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Market.Domain
 {
 
-    public class IdentityContext : IdentityDbContext<ApplicationUser>
+    public class IdentityContext : IdentityDbContext<UserModel>
     {
-        protected override void OnConfiguring
-            (DbContextOptionsBuilder optionsBuilder) =>
-        //optionsBuilder.UseSqlServer("Server=.;Database=MarketIdentity;Trusted_Connection=True;MultipleActiveResultSets=true");
-        //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MarketIdentity;Trusted_Connection=True;MultipleActiveResultSets=true");
-        optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\Sarzamin Hoshmand.DESKTOP-A9E5A8H\\Documents\\DB.mdf\";Integrated Security=True;Connect Timeout=30");
+        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
+        {
+
+        }
     }
 }
