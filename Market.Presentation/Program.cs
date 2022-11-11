@@ -21,11 +21,13 @@ builder.Services.AddSingleton<ITokenService, TokenService>();
 
 // For Entity Framework
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString")));
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("ApplicationConnectionString")));
 
 // For Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<IdentityContext>()
     .AddDefaultTokenProviders();
+
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
 {

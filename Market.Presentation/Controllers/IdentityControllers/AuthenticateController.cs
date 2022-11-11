@@ -1,6 +1,7 @@
 ﻿using Market.Application.Authentication;
 using Market.Domain.Models;
 using Market.Domain.Models.Authentication;
+using Market.Presentation.Controllers.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
