@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Market.Domain.Models
 {
+    //Done
     //TODO Brands have name , description , id 
-    internal class Brand
+    public class Brand
     {
+        public string? Name { get; set; }
+        public string? description { get; set; }
     }
 }

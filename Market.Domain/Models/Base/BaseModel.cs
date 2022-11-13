@@ -8,6 +8,8 @@ namespace Market.Domain.Models.Base
 {
     public class BaseModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+        public DateTime CreateDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

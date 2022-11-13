@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Market.Domain.Models
 {
+    //Done
     //TODO Product =Id , BrandId ,Name , Description => linked to CategoryOptionValue
     //TODO OptionForProduct = OptionId , Name ... like Size , Class , Length , ....
     //TODO OptionValueForProduct = OptionValueId, OptionId , Name ... like (Size = Xl , M , L , ...) , (Class = Private , Public , ...)
@@ -17,5 +18,7 @@ namespace Market.Domain.Models
     public class Product : BaseModel
     {
         public string? Name { get; set; }
+        public string? Description { get; set; }
+        public Guid BrandId { get; set; }
     }
 }
