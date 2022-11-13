@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Market.Domain.Models.Authentication
 {
-    public class RoleModel : IdentityRole
+    public class Role : IdentityRole
     {
 
     }

@@ -2,7 +2,7 @@
 
 namespace Market.Domain.Models
 {
-    public class ShopProductOptionValueF : BaseModel
+    public class ShopProductOptionValue : BaseModel
     {
         public Guid ProductId { get; set; }
         public Guid OptionValueId { get; set; }
