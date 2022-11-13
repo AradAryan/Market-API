@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Market.Domain.Models.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Market.Domain.Models
 {
     //Done
     //TODO Brands have name , description , id 
-    public class Brand
+    public class Brand : BaseModel
     {
         public string? Name { get; set; }
         public string? description { get; set; }
