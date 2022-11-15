@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Presentation", "Market.Presentation\Market.Presentation.csproj", "{4275B8EF-A530-44F4-B523-2CDEA5BFD175}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.Presentation", "Market.Presentation\Market.Presentation.csproj", "{4275B8EF-A530-44F4-B523-2CDEA5BFD175}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Infrastructure", "Market.Infrastructure\Market.Infrastructure.csproj", "{BC03AED8-22C1-4D70-ADB4-21D2EC1046DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.Infrastructure", "Market.Infrastructure\Market.Infrastructure.csproj", "{BC03AED8-22C1-4D70-ADB4-21D2EC1046DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Application", "Market.Application\Market.Application.csproj", "{30E4C6E2-D2CD-4987-8070-48C35B7B547F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.Application", "Market.Application\Market.Application.csproj", "{30E4C6E2-D2CD-4987-8070-48C35B7B547F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Domain", "Market.Domain\Market.Domain.csproj", "{F1749699-14DE-4080-A8D6-16982FC1C85B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.Domain", "Market.Domain\Market.Domain.csproj", "{F1749699-14DE-4080-A8D6-16982FC1C85B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "Market.CodeGenerator\CodeGenerator.csproj", "{1DC035D6-9D5A-4031-ADCB-BC6BB2B4EE0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F1749699-14DE-4080-A8D6-16982FC1C85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1749699-14DE-4080-A8D6-16982FC1C85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1749699-14DE-4080-A8D6-16982FC1C85B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DC035D6-9D5A-4031-ADCB-BC6BB2B4EE0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DC035D6-9D5A-4031-ADCB-BC6BB2B4EE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DC035D6-9D5A-4031-ADCB-BC6BB2B4EE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DC035D6-9D5A-4031-ADCB-BC6BB2B4EE0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

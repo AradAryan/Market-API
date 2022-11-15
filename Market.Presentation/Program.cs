@@ -1,3 +1,4 @@
+using Application;
 using Market.Application.Authentication;
 using Market.Domain;
 using Market.Domain.Models;
