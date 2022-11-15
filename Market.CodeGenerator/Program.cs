@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.ComponentModel;
-using System.Linq.Expressions;
+﻿using System.Diagnostics;
 
 namespace CodeGenerator
 {
@@ -11,6 +9,7 @@ namespace CodeGenerator
         private const string DtoPath = $@"{MainPath}\Dto\";
         private const string ApplicationServicePath = $@"{MainPath}\ApplicationService\";
         private const string IApplicationServicePath = $@"{MainPath}\IApplicationService\";
+        private const string ControllerPath = $@"{MainPath}\Controller\";
         private const string TemplatePath = $@"{MainPath}\Template.txt";
         static void Main(string[] args)
         {
@@ -18,6 +17,7 @@ namespace CodeGenerator
 
             Directory.CreateDirectory(MainPath);
             Directory.CreateDirectory(DtoPath);
+            Directory.CreateDirectory(ControllerPath);
             Directory.CreateDirectory(ApplicationServicePath);
             Directory.CreateDirectory(IApplicationServicePath);
             var models = Directory.GetFiles(ModelsPath);
@@ -27,14 +27,21 @@ namespace CodeGenerator
                 try
                 {
                     string modelCode = File.ReadAllText(item);
-                    var className = modelCode.Split("class").LastOrDefault().Split(' ')[1];
-                    var lowerClassName = className.Substring(0, 1).ToUpper() + className.Remove(0, 1);
+                    string className = modelCode.Split("class").LastOrDefault().Split(' ')[1];
+                    string lowerClassName = className.Substring(0, 1).ToLower() + className.Remove(0, 1);
                     string dtoCode = modelCode.Replace($"public class {className} : BaseModel", $"public class {className}Dto : BaseDto");
-                    templateCode = templateCode.Replace("%%%%", className).Replace("&&&&", lowerClassName);
-                    var slices = templateCode.Split("//interfaceArea");
-                    File.WriteAllText(ApplicationServicePath + className + "ApplicationService.cs", slices.FirstOrDefault());
-                    File.WriteAllText(IApplicationServicePath + "I" + className + "ApplicationService.cs", slices.LastOrDefault());
-                    File.WriteAllText(DtoPath + className + "Dto.cs", dtoCode);
+                    string codes = templateCode.Replace("%%%%", className).Replace("&&&&", lowerClassName);
+                    if (codes.Contains("Addresss"))
+                        codes = codes.Replace("Addresss", "Addresses");
+                    if (codes.Contains("Categorys"))
+                        codes = codes.Replace("Categorys", "Category");
+                    string[] slices = codes.Split("//Area");
+                    File.WriteAllText(ApplicationServicePath + className + "ApplicationService.cs", slices[0]);
+                    File.WriteAllText(IApplicationServicePath + "I" + className + "ApplicationService.cs", slices[1]);
+                    File.WriteAllText(ControllerPath + className + "Controller.cs", slices[2]);
+                    File.AppendAllText(MainPath + @"\DIScoped.txt", slices[3]);
+                    File.AppendAllText(MainPath + @"\DISingleton.txt", slices[4]);
+                    File.AppendAllText(MainPath + @"\DbSets.txt", slices[5]);
                 }
                 catch (Exception ex)
                 {

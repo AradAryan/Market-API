@@ -1,5 +1,4 @@
-﻿using Market.Domain.Models.Authentication;
-using Market.Domain.Models;
+﻿using Market.Domain.Models;
 
 namespace Market.Application.Authentication
 {

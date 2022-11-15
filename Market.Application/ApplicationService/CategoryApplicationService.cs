@@ -1,33 +1,33 @@
-﻿using Application;
+using Application;
 using Market.Domain;
 using Market.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Market.Application
 {
-    public class ProductApplicationService : BaseApplicationService
+    public class CategoryApplicationService : BaseApplicationService, ICategoryApplicationService
     {
         private ApplicationContext DbContext { get; set; }
 
-        public ProductApplicationService(ApplicationContext dbContext, IMapper<Product, ProductDto> mapper) : base()
+        public CategoryApplicationService(ApplicationContext dbContext) : base()
         {
             DbContext = dbContext;
         }
 
-        public async Task<ResponseModel> AddProduct(ProductDto newProduct)
+        public async Task<ResponseModel> AddCategory(CategoryDto newCategory)
         {
             try
             {
-                var product = Mapper.Map<ProductDto, Product>(newProduct);
-                product.CreateDate = DateTime.Now;
+                var category = Mapper.Map<CategoryDto, Category>(newCategory);
+                category.CreateDate = DateTime.Now;
 
-                await DbContext.Products.AddAsync(product);
+                await DbContext.Category.AddAsync(category);
                 DbContext.SaveChanges();
 
                 return new()
                 {
                     Succeed = true,
-                    Message = "Product Created Successfully!"
+                    Message = "Category Created Successfully!"
                 };
             }
             catch (Exception ex)
@@ -39,24 +39,24 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> RemoveProductById(Guid productId)
+        public async Task<ResponseModel> RemoveCategoryById(Guid categoryId)
         {
             try
             {
-                var product = await DbContext.Products.FirstOrDefaultAsync(c => c.Id == productId);
-                if (product is null)
+                var category = await DbContext.Category.FirstOrDefaultAsync(c => c.Id == categoryId);
+                if (category is null)
                     return new()
                     {
                         Succeed = false,
-                        Message = "Product Not Found!"
+                        Message = "Category Not Found!"
                     };
 
-                DbContext.Products.Remove(product);
+                DbContext.Category.Remove(category);
                 await DbContext.SaveChangesAsync();
                 return new()
                 {
                     Succeed = true,
-                    Message = "Product Removed Successfully!"
+                    Message = "Category Removed Successfully!"
                 };
             }
             catch (Exception ex)
@@ -68,14 +68,14 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> GetAllProducts()
+        public async Task<ResponseModel> GetAllCategory()
         {
             try
             {
                 return new()
                 {
                     Succeed = true,
-                    Data = Mapper.MapList<Product, ProductDto>(await DbContext.Products.ToListAsync())
+                    Data = Mapper.MapList<Category, CategoryDto>(await DbContext.Category.ToListAsync())
                 };
             }
             catch (Exception ex)
@@ -87,12 +87,12 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> GetProducts(Func<Product, bool> expression)
+        public async Task<ResponseModel> GetCategory(Func<Category, bool> expression)
         {
             try
             {
-                IEnumerable<ProductDto> data = default;
-                await Task.Run(() => data = Mapper.MapList<Product, ProductDto>(DbContext.Products.Where(expression).ToList()));
+                IEnumerable<CategoryDto> data = default;
+                await Task.Run(() => data = Mapper.MapList<Category, CategoryDto>(DbContext.Category.Where(expression).ToList()));
                 return new()
                 {
                     Succeed = true,
@@ -108,14 +108,14 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> GetProductById(Guid productId)
+        public async Task<ResponseModel> GetCategoryById(Guid categoryId)
         {
             try
             {
                 return new()
                 {
                     Succeed = true,
-                    Data = Mapper.Map<Product, ProductDto>(await DbContext.Products.FirstOrDefaultAsync(c => c.Id == productId))
+                    Data = Mapper.Map<Category, CategoryDto>(await DbContext.Category.FirstOrDefaultAsync(c => c.Id == categoryId))
                 };
             }
             catch (Exception ex)
@@ -127,24 +127,24 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> UpdateProduct(ProductDto product)
+        public async Task<ResponseModel> UpdateCategory(CategoryDto category)
         {
             try
             {
-                var result = await DbContext.Products.FirstOrDefaultAsync(c => c.Id == product.Id);
+                var result = await DbContext.Category.FirstOrDefaultAsync(c => c.Id == category.Id);
                 if (result is null)
                     return new()
                     {
                         Succeed = false,
-                        Message = "Product Not Found!"
+                        Message = "Category Not Found!"
                     };
-                result = Mapper.Map<ProductDto, Product>(product);
+                result = Mapper.Map<CategoryDto, Category>(category);
                 DbContext.SaveChanges();
 
                 return new()
                 {
                     Succeed = true,
-                    Message = "Product Created Successfully!"
+                    Message = "Category Created Successfully!"
                 };
             }
             catch (Exception ex)
@@ -156,15 +156,5 @@ namespace Market.Application
                 };
             }
         }
-    }
-
-    public interface IProductApplicationService
-    {
-        Task<ResponseModel> AddProduct(ProductDto newProduct);
-        Task<ResponseModel> RemoveProductById(Guid productId);
-        Task<ResponseModel> GetAllProducts();
-        Task<ResponseModel> GetProducts(Func<Product, bool> expression);
-        Task<ResponseModel> UpdateProduct(ProductDto product);
-        Task<ResponseModel> GetProductById(Guid productId);
     }
 }

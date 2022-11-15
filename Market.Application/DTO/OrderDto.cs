@@ -1,8 +1,6 @@
-﻿using Market.Domain.Models.Base;
-
-namespace Market.Domain.Models
+namespace Market.Application
 {
-    public class OrderDto : BaseModel
+    public class OrderDto : BaseDto
     {
         public Guid InvoiceId { get; set; }
         public Guid ProductPriceId { get; set; }

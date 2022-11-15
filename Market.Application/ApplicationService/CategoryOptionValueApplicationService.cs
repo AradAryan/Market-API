@@ -1,33 +1,33 @@
-﻿using Application;
+using Application;
 using Market.Domain;
 using Market.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Market.Application
 {
-    public class OrderApplicationService : BaseApplicationService
+    public class CategoryOptionValueApplicationService : BaseApplicationService, ICategoryOptionValueApplicationService
     {
         private ApplicationContext DbContext { get; set; }
 
-        public OrderApplicationService(ApplicationContext dbContext, IMapper<Order, OrderDto> mapper) : base()
+        public CategoryOptionValueApplicationService(ApplicationContext dbContext) : base()
         {
             DbContext = dbContext;
         }
 
-        public async Task<ResponseModel> AddOrder(OrderDto newOrder)
+        public async Task<ResponseModel> AddCategoryOptionValue(CategoryOptionValueDto newCategoryOptionValue)
         {
             try
             {
-                var order = Mapper.Map<OrderDto, Order>(newOrder);
-                order.CreateDate = DateTime.Now;
+                var categoryOptionValue = Mapper.Map<CategoryOptionValueDto, CategoryOptionValue>(newCategoryOptionValue);
+                categoryOptionValue.CreateDate = DateTime.Now;
 
-                await DbContext.Orders.AddAsync(order);
+                await DbContext.CategoryOptionValues.AddAsync(categoryOptionValue);
                 DbContext.SaveChanges();
 
                 return new()
                 {
                     Succeed = true,
-                    Message = "Order Created Successfully!"
+                    Message = "CategoryOptionValue Created Successfully!"
                 };
             }
             catch (Exception ex)
@@ -39,24 +39,24 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> RemoveOrderById(Guid orderId)
+        public async Task<ResponseModel> RemoveCategoryOptionValueById(Guid categoryOptionValueId)
         {
             try
             {
-                var order = await DbContext.Orders.FirstOrDefaultAsync(c => c.Id == orderId);
-                if (order is null)
+                var categoryOptionValue = await DbContext.CategoryOptionValues.FirstOrDefaultAsync(c => c.Id == categoryOptionValueId);
+                if (categoryOptionValue is null)
                     return new()
                     {
                         Succeed = false,
-                        Message = "Order Not Found!"
+                        Message = "CategoryOptionValue Not Found!"
                     };
 
-                DbContext.Orders.Remove(order);
+                DbContext.CategoryOptionValues.Remove(categoryOptionValue);
                 await DbContext.SaveChangesAsync();
                 return new()
                 {
                     Succeed = true,
-                    Message = "Order Removed Successfully!"
+                    Message = "CategoryOptionValue Removed Successfully!"
                 };
             }
             catch (Exception ex)
@@ -68,14 +68,14 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> GetAllOrders()
+        public async Task<ResponseModel> GetAllCategoryOptionValues()
         {
             try
             {
                 return new()
                 {
                     Succeed = true,
-                    Data = Mapper.MapList<Order, OrderDto>(await DbContext.Orders.ToListAsync())
+                    Data = Mapper.MapList<CategoryOptionValue, CategoryOptionValueDto>(await DbContext.CategoryOptionValues.ToListAsync())
                 };
             }
             catch (Exception ex)
@@ -87,12 +87,12 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> GetOrders(Func<Order, bool> expression)
+        public async Task<ResponseModel> GetCategoryOptionValues(Func<CategoryOptionValue, bool> expression)
         {
             try
             {
-                IEnumerable<OrderDto> data = default;
-                await Task.Run(() => data = Mapper.MapList<Order, OrderDto>(DbContext.Orders.Where(expression).ToList()));
+                IEnumerable<CategoryOptionValueDto> data = default;
+                await Task.Run(() => data = Mapper.MapList<CategoryOptionValue, CategoryOptionValueDto>(DbContext.CategoryOptionValues.Where(expression).ToList()));
                 return new()
                 {
                     Succeed = true,
@@ -108,14 +108,14 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> GetOrderById(Guid orderId)
+        public async Task<ResponseModel> GetCategoryOptionValueById(Guid categoryOptionValueId)
         {
             try
             {
                 return new()
                 {
                     Succeed = true,
-                    Data = Mapper.Map<Order, OrderDto>(await DbContext.Orders.FirstOrDefaultAsync(c => c.Id == orderId))
+                    Data = Mapper.Map<CategoryOptionValue, CategoryOptionValueDto>(await DbContext.CategoryOptionValues.FirstOrDefaultAsync(c => c.Id == categoryOptionValueId))
                 };
             }
             catch (Exception ex)
@@ -127,24 +127,24 @@ namespace Market.Application
                 };
             }
         }
-        public async Task<ResponseModel> UpdateOrder(OrderDto order)
+        public async Task<ResponseModel> UpdateCategoryOptionValue(CategoryOptionValueDto categoryOptionValue)
         {
             try
             {
-                var result = await DbContext.Orders.FirstOrDefaultAsync(c => c.Id == order.Id);
+                var result = await DbContext.CategoryOptionValues.FirstOrDefaultAsync(c => c.Id == categoryOptionValue.Id);
                 if (result is null)
                     return new()
                     {
                         Succeed = false,
-                        Message = "Order Not Found!"
+                        Message = "CategoryOptionValue Not Found!"
                     };
-                result = Mapper.Map<OrderDto, Order>(order);
+                result = Mapper.Map<CategoryOptionValueDto, CategoryOptionValue>(categoryOptionValue);
                 DbContext.SaveChanges();
 
                 return new()
                 {
                     Succeed = true,
-                    Message = "Order Created Successfully!"
+                    Message = "CategoryOptionValue Created Successfully!"
                 };
             }
             catch (Exception ex)
@@ -156,15 +156,5 @@ namespace Market.Application
                 };
             }
         }
-    }
-
-    public interface IOrderApplicationService
-    {
-        Task<ResponseModel> AddOrder(OrderDto newOrder);
-        Task<ResponseModel> RemoveOrderById(Guid orderId);
-        Task<ResponseModel> GetAllOrders();
-        Task<ResponseModel> GetOrders(Func<Order, bool> expression);
-        Task<ResponseModel> UpdateOrder(OrderDto order);
-        Task<ResponseModel> GetOrderById(Guid orderId);
     }
 }
