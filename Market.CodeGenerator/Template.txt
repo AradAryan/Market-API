@@ -1,0 +1,231 @@
+using Application;
+using Market.Domain;
+using Market.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Market.Application
+{
+    public class %%%%ApplicationService : BaseApplicationService, I%%%%ApplicationService
+    {
+        private ApplicationContext DbContext { get; set; }
+
+        public %%%%ApplicationService(ApplicationContext dbContext) : base()
+        {
+            DbContext = dbContext;
+        }
+
+        public async Task<ResponseModel> Add%%%%(%%%%Dto new%%%%)
+        {
+            try
+            {
+                var &&&& = Mapper.Map<%%%%Dto, %%%%>(new%%%%);
+                &&&&.CreateDate = DateTime.Now;
+
+                await DbContext.%%%%s.AddAsync(&&&&);
+                DbContext.SaveChanges();
+
+                return new()
+                {
+                    Succeed = true,
+                    Message = "%%%% Created Successfully!"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new()
+                {
+                    Succeed = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseModel> Remove%%%%ById(Guid &&&&Id)
+        {
+            try
+            {
+                var &&&& = await DbContext.%%%%s.FirstOrDefaultAsync(c => c.Id == &&&&Id);
+                if (&&&& is null)
+                    return new()
+                    {
+                        Succeed = false,
+                        Message = "%%%% Not Found!"
+                    };
+
+                DbContext.%%%%s.Remove(&&&&);
+                await DbContext.SaveChangesAsync();
+                return new()
+                {
+                    Succeed = true,
+                    Message = "%%%% Removed Successfully!"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new()
+                {
+                    Succeed = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseModel> GetAll%%%%s()
+        {
+            try
+            {
+                return new()
+                {
+                    Succeed = true,
+                    Data = Mapper.MapList<%%%%, %%%%Dto>(await DbContext.%%%%s.ToListAsync())
+                };
+            }
+            catch (Exception ex)
+            {
+                return new()
+                {
+                    Succeed = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseModel> Get%%%%s(Func<%%%%, bool> expression)
+        {
+            try
+            {
+                IEnumerable<%%%%Dto> data = default;
+                await Task.Run(() => data = Mapper.MapList<%%%%, %%%%Dto>(DbContext.%%%%s.Where(expression).ToList()));
+                return new()
+                {
+                    Succeed = true,
+                    Data = data,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new()
+                {
+                    Succeed = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseModel> Get%%%%ById(Guid &&&&Id)
+        {
+            try
+            {
+                return new()
+                {
+                    Succeed = true,
+                    Data = Mapper.Map<%%%%, %%%%Dto>(await DbContext.%%%%s.FirstOrDefaultAsync(c => c.Id == &&&&Id))
+                };
+            }
+            catch (Exception ex)
+            {
+                return new()
+                {
+                    Succeed = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+        public async Task<ResponseModel> Update%%%%(%%%%Dto &&&&)
+        {
+            try
+            {
+                var result = await DbContext.%%%%s.FirstOrDefaultAsync(c => c.Id == &&&&.Id);
+                if (result is null)
+                    return new()
+                    {
+                        Succeed = false,
+                        Message = "%%%% Not Found!"
+                    };
+                result = Mapper.Map<%%%%Dto, %%%%>(&&&&);
+                DbContext.SaveChanges();
+
+                return new()
+                {
+                    Succeed = true,
+                    Message = "%%%% Created Successfully!"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new()
+                {
+                    Succeed = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+    }
+}
+//Areausing Market.Domain;
+using Market.Domain.Models;
+
+namespace Market.Application
+{
+    public interface I%%%%ApplicationService
+    {
+        Task<ResponseModel> Add%%%%(%%%%Dto new%%%%);
+        Task<ResponseModel> Remove%%%%ById(Guid &&&&Id);
+        Task<ResponseModel> GetAll%%%%s();
+        Task<ResponseModel> Get%%%%s(Func<%%%%, bool> expression);
+        Task<ResponseModel> Update%%%%(%%%%Dto &&&&);
+        Task<ResponseModel> Get%%%%ById(Guid &&&&Id);
+    }
+}
+//Areausing Market.Application;
+using Market.Presentation.Controllers.Base;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Market.Presentation.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class %%%%Controller : BaseController<%%%%Controller>
+    {
+        private I%%%%ApplicationService %%%%ApplicationService { get; set; }
+        public %%%%Controller(ILogger<%%%%Controller> logger, I%%%%ApplicationService &&&&ApplicationService) : base(logger)
+        {
+            %%%%ApplicationService = &&&&ApplicationService;
+        }
+
+        [HttpPost]
+        [Route("Add%%%%")]
+        public async Task<IActionResult> Add%%%%(%%%%Dto &&&&)
+        {
+            return ReturnResponse(await %%%%ApplicationService.Add%%%%(&&&&));
+        }
+
+        [HttpDelete]
+        [Route("Remove%%%%ById")]
+        public async Task<IActionResult> Remove%%%%ById(Guid &&&&Id)
+        {
+            return ReturnResponse(await %%%%ApplicationService.Remove%%%%ById(&&&&Id));
+        }
+
+        [HttpGet]
+        [Route("GetAll%%%%s")]
+        public async Task<IActionResult> GetAll%%%%s()
+        {
+            return ReturnResponse(await %%%%ApplicationService.GetAll%%%%s());
+        }
+
+        [HttpPut]
+        [Route("Update%%%%")]
+        public async Task<IActionResult> Update%%%%(%%%%Dto &&&&)
+        {
+            return ReturnResponse(await %%%%ApplicationService.Update%%%%(&&&&));
+        }
+
+        [HttpPost]
+        [Route("Get%%%%ById")]
+        public async Task<IActionResult> Get%%%%ById(Guid &&&&Id)
+        {
+            return ReturnResponse(await %%%%ApplicationService.Get%%%%ById(&&&&Id));
+        }
+
+    }
+}//Areabuilder.Services.AddScoped<I%%%%ApplicationService, %%%%ApplicationService>();
+//Areabuilder.Services.AddSingleton<I%%%%Service, %%%%Service>();//Areapublic DbSet<%%%%>? %%%%s { get; set; }
