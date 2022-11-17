@@ -49,7 +49,6 @@ namespace CodeGenerator
                     continue;
                 }
             }
-            //var className = ""
         }
 
     }
