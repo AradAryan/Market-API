@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
-
+import { ProdcutApiService } from 'src/app/services/product/prodcut-service.service'
 interface IUser {
   name: string;
   state: string;
@@ -22,7 +22,7 @@ interface IUser {
   styleUrls: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor(private chartsData: DashboardChartsData) {
+  constructor(private chartsData: DashboardChartsData, private productApiService: ProdcutApiService) {
   }
 
   public users: IUser[] = [
@@ -117,6 +117,10 @@ export class DashboardComponent implements OnInit {
 
   initCharts(): void {
     this.mainChart = this.chartsData.mainChart;
+  }
+
+  onCreateProduct() {
+    this.productApiService.createProduct({ name: 'TestAngular' });
   }
 
   setTrafficPeriod(value: string): void {
