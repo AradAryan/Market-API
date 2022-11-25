@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiOriginUrl: 'https://localhost:7082/api/',
+  apiLoginUrl: 'https://localhost:7082/api/Authenticate/Login',
+  tokenTag: 'JwtToken',
+  tokenType:'Bearer '
 };
 
 /*

@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BaseApiServiceService } from 'src/app/services/apiServiceBase/base-api-service.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ProdcutApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private apiService: BaseApiServiceService) {
+  }
 
-  createProduct(products: { name: string }) {
-    console.log('products');
-    const headers = new HttpHeaders({ 'myHeader': 'procademy' });
-    this.http.post<{ name: string }>(
-      '', products, { headers: headers })
-      .subscribe((res) => {
-        console.log(res);
-      });
-
+  createProduct(products: { id: string, name: string, description: string, brandId: string }) {
+    console.log(this.apiService.post(products, 'Product/AddProduct'));
   }
 
   fetchProduct() {

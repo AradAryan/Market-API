@@ -103,16 +103,26 @@ builder.Services.AddSwaggerGen(c =>
 
 });
 
-var app = builder.Build();
+var MyAllowSpecificOrigins = "_MyAllowSubdomainPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                      });
+});
 
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
+app.UseCors(MyAllowSpecificOrigins);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
-
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();

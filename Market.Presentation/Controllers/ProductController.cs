@@ -1,11 +1,12 @@
 using Market.Application;
 using Market.Presentation.Controllers.Base;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Market.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [EnableCors("_MyAllowSubdomainPolicy")]
     [ApiController]
     [Authorize]
     public class ProductController : BaseController<ProductController>
