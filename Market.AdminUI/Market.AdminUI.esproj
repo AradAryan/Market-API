@@ -11,6 +11,6 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\Market.AdminUI</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\services\product\" />
+    <Folder Include="src\app\services\authentication\" />
   </ItemGroup>
 </Project>
