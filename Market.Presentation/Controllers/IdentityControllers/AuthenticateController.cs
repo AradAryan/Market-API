@@ -31,9 +31,6 @@ namespace Market.Presentation.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            model.Username = "string";
-            model.Password = "cG5QwALdkCRG7B6-";
-
             return ReturnResponse(await UserApplicationService.Login(model));
         }
 
@@ -41,10 +38,6 @@ namespace Market.Presentation.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            model.PhoneNumber = "09122913957";
-            model.Username = "string";
-            model.Password = "cG5QwALdkCRG7B6-";
-
             var result = await UserApplicationService.CreateUser(model);
             return ReturnResponse(result);
         }
