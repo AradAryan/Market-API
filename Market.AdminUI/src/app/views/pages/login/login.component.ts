@@ -15,7 +15,7 @@ export class LoginComponent {
     console.log(username, password);
     let result = await this.auth.Login(username, password);
     if (result.succeed == true)
-      this.router.navigate(['Login']); // tells them they've been logged out (somehow)
-    else alert("Login Failed!" + result.message);
+      this.router.navigate(['Dashboard']);
+    else alert(result.message);
   }
 }

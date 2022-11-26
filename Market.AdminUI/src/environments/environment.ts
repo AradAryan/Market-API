@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiOriginUrl: 'https://localhost:7082/api/',
   apiLoginUrl: 'https://localhost:7082/api/Authenticate/Login',
+  apiRegisterUrl: 'https://localhost:7082/api/Authenticate/Register',
   tokenTag: 'JwtToken',
   tokenType:'Bearer '
 };

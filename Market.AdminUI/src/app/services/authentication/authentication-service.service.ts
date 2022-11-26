@@ -20,4 +20,13 @@ export class AuthenticationService {
     }
   }
 
+  public async Register(username: string, email: string, password: string, phoneNumber: string): Promise<ResponseModel> {
+    try {
+      var res = await this.http.post<ResponseModel>(environment.apiRegisterUrl, { username, email, password, phoneNumber }, { headers: new HttpHeaders() }).toPromise();
+      return res || new ResponseModel(false, null, 'Unknown Error');
+    } catch (e) {
+      return new ResponseModel(false, e, 'Unknown Error');
+    }
+  }
+
 }
