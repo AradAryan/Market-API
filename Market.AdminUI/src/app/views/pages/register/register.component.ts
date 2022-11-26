@@ -11,11 +11,13 @@ export class RegisterComponent {
 
   constructor(private auth: AuthenticationService, private router: Router) { }
 
-  public async Register(username: string, email: string, password: string, phoneNumber: string) {
-    console.log(username, password);
-    let result = await this.auth.Register(username, email, password, phoneNumber);
-    if (result.succeed == true)
-      this.router.navigate(['Login']);
-    else alert(result.message);
+  async Register(username: string, email: string, password: string, rPassword: string, phoneNumber: string) {
+    if (password === rPassword) {
+      let result = await this.auth.Register(username, email, password, phoneNumber);
+      if (result.succeed == true)
+        this.router.navigate(['Login']);
+      else alert(result.message);
+    }
+    else alert('Passwords Are not Match');
   }
 }
