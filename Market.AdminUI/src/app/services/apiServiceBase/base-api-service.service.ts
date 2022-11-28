@@ -22,7 +22,38 @@ export class BaseApiServiceService {
     this.http.post<ResponseModel>(
       environment.apiOriginUrl + actionUrl, data, { headers: headers })
       .subscribe((res) => {
-        console.log(res);
+        result = new ResponseModel(res.data, res.data, res.message);
+      });
+    return result;
+  }
+
+  get(actionUrl: string): ResponseModel {
+    const headers = new HttpHeaders(
+      {
+        'Authorization':
+          environment.tokenType + localStorage.getItem(environment.tokenTag)
+      }
+    );
+    var result: any;
+    this.http.get<ResponseModel>(
+      environment.apiOriginUrl + actionUrl, { headers: headers })
+      .subscribe((res) => {
+        result = new ResponseModel(res.data, res.data, res.message);
+      });
+    return result;
+  }
+
+  put(actionUrl: string): ResponseModel {
+    const headers = new HttpHeaders(
+      {
+        'Authorization':
+          environment.tokenType + localStorage.getItem(environment.tokenTag)
+      }
+    );
+    var result: any;
+    this.http.get<ResponseModel>(
+      environment.apiOriginUrl + actionUrl, { headers: headers })
+      .subscribe((res) => {
         result = new ResponseModel(res.data, res.data, res.message);
       });
     return result;
