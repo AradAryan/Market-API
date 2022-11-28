@@ -11,52 +11,24 @@ export class BaseApiServiceService {
   constructor(private http: HttpClient) {
   }
 
-  post(data: any, actionUrl: string): ResponseModel {
-    const headers = new HttpHeaders(
-      {
-        'Authorization':
-          environment.tokenType + localStorage.getItem(environment.tokenTag)
-      }
-    );
-    var result: any;
-    this.http.post<ResponseModel>(
-      environment.apiOriginUrl + actionUrl, data, { headers: headers })
-      .subscribe((res) => {
-        result = new ResponseModel(res.data, res.data, res.message);
-      });
-    return result;
+  async post(data: any, actionUrl: string): Promise<ResponseModel | undefined> {
+    const headers = new HttpHeaders({ 'Authorization': environment.tokenType + localStorage.getItem(environment.tokenTag) });
+    return await this.http.post<ResponseModel>(environment.apiOriginUrl + actionUrl, data, { headers: headers }).toPromise();
   }
 
-  get(actionUrl: string): ResponseModel {
-    const headers = new HttpHeaders(
-      {
-        'Authorization':
-          environment.tokenType + localStorage.getItem(environment.tokenTag)
-      }
-    );
-    var result: any;
-    this.http.get<ResponseModel>(
-      environment.apiOriginUrl + actionUrl, { headers: headers })
-      .subscribe((res) => {
-        result = new ResponseModel(res.data, res.data, res.message);
-      });
-    return result;
+  async get(actionUrl: string): Promise<ResponseModel | undefined> {
+    const headers = new HttpHeaders({ 'Authorization': environment.tokenType + localStorage.getItem(environment.tokenTag) });
+    return await this.http.get<ResponseModel>(environment.apiOriginUrl + actionUrl, { headers: headers }).toPromise()
   }
 
-  put(actionUrl: string): ResponseModel {
-    const headers = new HttpHeaders(
-      {
-        'Authorization':
-          environment.tokenType + localStorage.getItem(environment.tokenTag)
-      }
-    );
-    var result: any;
-    this.http.get<ResponseModel>(
-      environment.apiOriginUrl + actionUrl, { headers: headers })
-      .subscribe((res) => {
-        result = new ResponseModel(res.data, res.data, res.message);
-      });
-    return result;
+  async put(data: any, actionUrl: string): Promise<ResponseModel | undefined> {
+    const headers = new HttpHeaders({ 'Authorization': environment.tokenType + localStorage.getItem(environment.tokenTag) });
+    return await this.http.put<ResponseModel>(environment.apiOriginUrl + actionUrl, data, { headers: headers }).toPromise();
+  }
+
+  async delete(actionUrl: string, id: string): Promise<ResponseModel | undefined> {
+    const headers = new HttpHeaders({ 'Authorization': environment.tokenType + localStorage.getItem(environment.tokenTag) });
+    return await this.http.post<ResponseModel>(environment.apiOriginUrl + actionUrl, id, { headers: headers }).toPromise();
   }
 
 }
